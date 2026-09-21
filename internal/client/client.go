@@ -237,7 +237,7 @@ func (c *Client) do(ctx context.Context, req map[string]interface{}, resp interf
 	tflog.Trace(ctx, "Client.do")
 
 	if !c.IsConfigured() {
-		return errors.New("Timescale provider is not configured. Please provide project_id and either access_token or (access_key and secret_key) to use Timescale resources")
+		return errors.New("timescale provider is not configured. Please provide project_id and either access_token or (access_key and secret_key) to use Timescale resources")
 	}
 
 	jsonValue, err := json.Marshal(req)

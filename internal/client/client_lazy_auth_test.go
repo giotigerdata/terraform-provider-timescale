@@ -63,7 +63,7 @@ func TestClientDoUnconfigured(t *testing.T) {
 	if err == nil {
 		t.Errorf("Expected error when client is unconfigured, got nil")
 	}
-	if err.Error() != "Timescale provider is not configured. Please provide project_id and either access_token or (access_key and secret_key) to use Timescale resources" {
+	if err.Error() != "timescale provider is not configured. Please provide project_id and either access_token or (access_key and secret_key) to use Timescale resources" {
 		t.Errorf("Got unexpected error message: %v", err)
 	}
 }
