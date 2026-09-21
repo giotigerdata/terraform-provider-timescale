@@ -52,7 +52,8 @@ func TestClientIsConfigured(t *testing.T) {
 }
 
 func TestClientDoUnconfigured(t *testing.T) {
-	client := NewClient("", "", "test", "1.0")
+	// Client with projectID but no token should error
+	client := NewClient("", "valid-project", "test", "1.0")
 	req := map[string]interface{}{
 		"operationName": "TestOperation",
 		"query":         "query { test }",
@@ -61,7 +62,7 @@ func TestClientDoUnconfigured(t *testing.T) {
 
 	err := client.do(context.Background(), req, &resp)
 	if err == nil {
-		t.Errorf("Expected error when client is unconfigured, got nil")
+		t.Errorf("Expected error when client has no token, got nil")
 	}
 	if err.Error() != "timescale provider is not configured. Please provide project_id and either access_token or (access_key and secret_key) to use Timescale resources" {
 		t.Errorf("Got unexpected error message: %v", err)
