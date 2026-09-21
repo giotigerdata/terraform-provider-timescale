@@ -236,8 +236,9 @@ func (e *Error) Error() string {
 func (c *Client) do(ctx context.Context, req map[string]interface{}, resp interface{}) error {
 	tflog.Trace(ctx, "Client.do")
 
-	// Only check for token; projectID is optional for JWT exchange calls
-	if c.token == "" {
+	// Check for token, but allow JWT exchange operations which don't require a token yet
+	operationName, _ := req["operationName"].(string)
+	if c.token == "" && operationName != "GetJWTForClientCredentials" {
 		return errors.New("timescale provider is not configured. Please provide project_id and either access_token or (access_key and secret_key) to use Timescale resources")
 	}
 
