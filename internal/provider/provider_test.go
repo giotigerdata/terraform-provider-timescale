@@ -69,16 +69,16 @@ func init() {
 }
 
 func testAccPreCheck(t *testing.T) {
-	_, ok := os.LookupEnv("TF_VAR_ts_access_key")
-	if !ok {
-		t.Skip("Skipping acceptance tests - TF_VAR_ts_access_key not set")
+	accessKey := os.Getenv("TF_VAR_ts_access_key")
+	if accessKey == "" {
+		t.Skip("Skipping acceptance tests - TF_VAR_ts_access_key not set or empty")
 	}
-	_, ok = os.LookupEnv("TF_VAR_ts_secret_key")
-	if !ok {
-		t.Skip("Skipping acceptance tests - TF_VAR_ts_secret_key not set")
+	secretKey := os.Getenv("TF_VAR_ts_secret_key")
+	if secretKey == "" {
+		t.Skip("Skipping acceptance tests - TF_VAR_ts_secret_key not set or empty")
 	}
-	_, ok = os.LookupEnv("TF_VAR_ts_project_id")
-	if !ok {
-		t.Skip("Skipping acceptance tests - TF_VAR_ts_project_id not set")
+	projectID := os.Getenv("TF_VAR_ts_project_id")
+	if projectID == "" {
+		t.Skip("Skipping acceptance tests - TF_VAR_ts_project_id not set or empty")
 	}
 }
