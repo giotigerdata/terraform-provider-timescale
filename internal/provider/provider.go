@@ -112,9 +112,11 @@ func (p *timescaleProvider) Configure(ctx context.Context, req provider.Configur
 	client := tsClient.NewClient(data.AccessToken.ValueString(), data.ProjectID.ValueString(),
 		p.version, p.terraformVersion)
 
-	// Defer JWT exchange until a resource actually needs it; only attempt auth if credentials are provided
-	if !data.AccessKey.IsNull() && !data.SecretKey.IsNull() {
-		err := tsClient.JWTFromCC(client, data.AccessKey.ValueString(), data.SecretKey.ValueString())
+	// Defer JWT exchange until a resource actually needs it; only attempt auth if credentials are provided and not empty
+	accessKey := data.AccessKey.ValueString()
+	secretKey := data.SecretKey.ValueString()
+	if accessKey != "" && secretKey != "" {
+		err := tsClient.JWTFromCC(client, accessKey, secretKey)
 		if err != nil {
 			resp.Diagnostics.AddError("Client Error", fmt.Sprintf("Unable to get JWT from CC, got error: %s", err))
 			return
